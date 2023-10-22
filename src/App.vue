@@ -1,10 +1,27 @@
 <script setup>
+import { ref, reactive } from "vue";
+//匯入組件
 import sidebar from "./components/sidebar.vue";
 import setAmountBox from "./components/setAmountBox.vue";
 import addBtn from "./components/addBtn.vue";
 import list from "./components/list.vue";
 import addPopWindow from "./components/addPopWindow.vue";
 import deletePopWindow from "./components/deletePopWindow.vue";
+
+const isDisplayDelete = ref(false);
+const isDisplayAdd = ref(false);
+
+//開啟/關閉DeletePopWindow
+const isDeletePopDisplay = () => {
+  isDisplayDelete.value = !isDisplayDelete.value;
+  console.log("關閉/顯示deletePopWindow");
+};
+
+//開啟/關閉AddPopWindow
+const isAddPopDisplay = () => {
+  isDisplayAdd.value = !isDisplayAdd.value;
+  console.log("關閉/顯示addPopWindow");
+};
 </script>
 
 <template>
@@ -16,16 +33,25 @@ import deletePopWindow from "./components/deletePopWindow.vue";
     <div class="rightBox">
       <div class="rightTopBox">
         <setAmountBox />
-        <addBtn />
+        <addBtn :isDisplay="isAddPopDisplay" />
       </div>
       <div class="listArea">
-        <list />
+        <list :isDisplay="isDeletePopDisplay" />
       </div>
     </div>
   </div>
 
-  <!-- <addPopWindow /> -->
-  <!-- <deletePopWindow /> -->
+  <addPopWindow
+    class="fixedground"
+    v-show="isDisplayAdd"
+    :isDisplay="isAddPopDisplay"
+  />
+
+  <deletePopWindow
+    class="fixedground"
+    v-show="isDisplayDelete"
+    :isDisplay="isDeletePopDisplay"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -59,5 +85,10 @@ import deletePopWindow from "./components/deletePopWindow.vue";
       overflow-y: scroll;
     }
   }
+}
+
+.fixedground {
+  position: fixed;
+  top: 0%;
 }
 </style>

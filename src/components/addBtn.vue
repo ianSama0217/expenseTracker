@@ -1,7 +1,14 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  isDisplay: {
+    type: Function,
+    default: () => {},
+  },
+});
+</script>
 
 <template>
-  <button type="button">Add transaction</button>
+  <button type="button" @click="isDisplay">Add transaction</button>
 </template>
 
 <style scoped lang="scss">

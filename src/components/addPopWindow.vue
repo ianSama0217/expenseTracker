@@ -1,9 +1,16 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  isDisplay: {
+    type: Function,
+    default: () => {},
+  },
+});
+</script>
 
 <template>
   <div class="body">
     <form action="">
-      <i class="fa-solid fa-x icon"></i>
+      <i class="fa-solid fa-x icon" @click="isDisplay"></i>
       <label for="">Text</label>
       <input type="text" placeholder="Empty" />
       <div class="radioBox">
@@ -14,7 +21,7 @@
       </div>
       <label for="">Amount</label>
       <input type="number" placeholder="Empty" />
-      <button type="button">add transaction</button>
+      <button type="button" @click="isDisplay">add transaction</button>
     </form>
   </div>
 </template>

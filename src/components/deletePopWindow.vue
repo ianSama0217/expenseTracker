@@ -1,11 +1,18 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  isDisplay: {
+    type: Function,
+    default: () => {},
+  },
+});
+</script>
 
 <template>
   <div class="body">
     <div class="deletebox">
-      <i class="fa-solid fa-x icon"></i>
+      <i class="fa-solid fa-x icon" @click="isDisplay"></i>
       <span for="">Sure to delete?</span>
-      <button type="button">add transaction</button>
+      <button type="button" @click="isDisplay">Delete</button>
     </div>
   </div>
 </template>

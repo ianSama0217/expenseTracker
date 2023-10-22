@@ -1,11 +1,18 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  isDisplay: {
+    type: Function,
+    default: () => {},
+  },
+});
+</script>
 
 <template>
   <div class="body">
     <span>Text</span>
     <div class="flexbox">
       <p>$0</p>
-      <button>Delete</button>
+      <button @click="isDisplay">Delete</button>
     </div>
   </div>
 </template>
