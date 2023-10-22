@@ -1,5 +1,20 @@
-<script setup></script>
+<script setup>
+import sidebar from "./components/sidebar.vue";
+import setAmountBox from "./components/setAmountBox.vue";
+import addBtn from "./components/addBtn.vue";
+import list from "./components/list.vue";
+import addPopWindow from "./components/addPopWindow.vue";
+import deletePopWindow from "./components/deletePopWindow.vue";
+</script>
 
-<template></template>
+<template>
+  <!-- <sidebar />
+  <setAmountBox />
+  <addBtn />
+  <list /> -->
 
-<style scoped></style>
+  <!-- <addPopWindow /> -->
+  <!-- <deletePopWindow /> -->
+</template>
+
+<style scoped lang="scss"></style>
