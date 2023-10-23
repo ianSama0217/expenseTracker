@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, onMounted } from "vue";
 //匯入組件
 import sidebar from "./components/sidebar.vue";
 import setAmountBox from "./components/setAmountBox.vue";
@@ -34,6 +34,9 @@ const addTranscation = () => {
     dataObjArray.push(dataObj);
     console.log("資料新增成功" + JSON.stringify(dataObj));
 
+    //設定localStorage資料
+    localStorage.setItem("ListData", JSON.stringify(dataObjArray));
+
     //push進陣列後clear dataObj
     dataObj = { text: "", color: "", amount: 0 };
 
@@ -54,6 +57,9 @@ const isDeletePopDisplay = () => {
 const deleteTranscation = (index) => {
   //清除Array資料
   dataObjArray.splice(index, 1);
+
+  //設定localStorage資料
+  localStorage.setItem("ListData", JSON.stringify(dataObjArray));
 
   //關閉彈跳視窗
   isDeletePopDisplay();
@@ -100,9 +106,19 @@ const setTotalAmount = () => {
 
 //監聽dataObjArray
 watch(dataObjArray, () => {
-  console.log("dataObjArray被改變");
-
   setTotalAmount();
+});
+
+//重新開啟網站load localStorage資料
+//onMounted 在掛載到DOM後執行
+onMounted(() => {
+  let listData = JSON.parse(localStorage.getItem("ListData"));
+  if (listData) {
+    dataObjArray.length = 0;
+    dataObjArray.push(...listData);
+  } else {
+    dataObjArray.length = 0;
+  }
 });
 </script>
 
@@ -119,10 +135,11 @@ watch(dataObjArray, () => {
       </div>
       <div class="listArea">
         <list
-          v-for="item in dataObjArray"
+          v-for="(item, index) in dataObjArray"
           :text="item.text"
           :color="item.color"
           :amount="item.amount"
+          :BtnNum="index"
           :isDisplay="isDeletePopDisplay"
           :listArray="dataObjArray"
         />
