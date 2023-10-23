@@ -12,8 +12,6 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  btnNum: Number,
-
   isDisplay: {
     type: Function,
     default: () => {},
@@ -30,7 +28,7 @@ const props = defineProps({
     <span>{{ text }}</span>
     <div class="flexbox">
       <p :class="color">$ {{ amount }}</p>
-      <button @click="isDisplay" id="targetList">Delete{{ btnNum }}</button>
+      <button @click="isDisplay">Delete</button>
     </div>
   </div>
 </template>
