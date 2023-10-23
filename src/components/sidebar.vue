@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  totalBalance: {
+    type: Number,
+    default: 0,
+  },
+});
+</script>
 
 <template>
   <div class="body">
@@ -6,7 +13,7 @@
     <h3>Kouhei</h3>
     <div class="totalBalance">
       <span>YOUR BALANCE</span>
-      <p>$0</p>
+      <p>$ {{ totalBalance }}</p>
     </div>
   </div>
 </template>

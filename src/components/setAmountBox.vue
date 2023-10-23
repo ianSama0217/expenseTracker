@@ -1,14 +1,25 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  totalIncome: {
+    type: Number,
+    default: 0,
+  },
+  totalExpense: {
+    type: Number,
+    default: 0,
+  },
+});
+</script>
 
 <template>
   <div class="body">
     <div class="totalIncome">
       <span>INCOME</span>
-      <p>$0</p>
+      <p>$ {{ totalIncome }}</p>
     </div>
     <div class="totalExpense">
       <span>EXPENSE</span>
-      <p>$0</p>
+      <p>$ {{ totalExpense }}</p>
     </div>
   </div>
 </template>

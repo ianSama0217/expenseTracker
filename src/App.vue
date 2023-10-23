@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 //匯入組件
 import sidebar from "./components/sidebar.vue";
 import setAmountBox from "./components/setAmountBox.vue";
@@ -8,6 +8,9 @@ import list from "./components/list.vue";
 import addPopWindow from "./components/addPopWindow.vue";
 import deletePopWindow from "./components/deletePopWindow.vue";
 
+const totalIncome = ref(0);
+const totalExpense = ref(0);
+const totalBalance = ref(0);
 const isDisplayDelete = ref(false);
 const isDisplayAdd = ref(false);
 
@@ -25,15 +28,20 @@ const isAddPopDisplay = () => {
 
 //新增list表單
 const addTranscation = () => {
-  //array.push (object) --> []
-  dataObjArray.push(dataObj);
-  console.log("資料新增成功" + JSON.stringify(dataObj));
+  // 設定要填寫資料完畢才能新增表單(防呆)
+  if (dataObj.text && dataObj.color && dataObj.amount) {
+    //array.push (object) --> []
+    dataObjArray.push(dataObj);
+    console.log("資料新增成功" + JSON.stringify(dataObj));
 
-  //push進陣列後clear dataObj
-  dataObj = { text: "", color: "", amount: 0 };
+    //push進陣列後clear dataObj
+    dataObj = { text: "", color: "", amount: 0 };
 
-  //關閉addPopWIndow
-  isAddPopDisplay();
+    //關閉addPopWIndow
+    isAddPopDisplay();
+  } else {
+    alert("請確認資料是否填寫完畢!");
+  }
 };
 
 //開啟/關閉DeletePopWindow，指定Button的父組件
@@ -46,7 +54,6 @@ const isDeletePopDisplay = () => {
 const deleteTranscation = (index) => {
   //清除Array資料
   dataObjArray.splice(index, 1);
-  console.log("資料刪除成功" + JSON.stringify(dataObj));
 
   //關閉彈跳視窗
   isDeletePopDisplay();
@@ -67,26 +74,55 @@ const setAmount = (data) => {
   // 將資料覆寫至dataObj修改原有資料
   dataObj.amount = Number(data);
 };
+
+//設定totalincome,totalexpense,totalbalance
+const setTotalAmount = () => {
+  // 每次執行前先把value重至
+  totalIncome.value = 0;
+  totalExpense.value = 0;
+  totalBalance.value = 0;
+
+  dataObjArray.forEach((element) => {
+    if (element.color == "green") {
+      totalIncome.value += element.amount;
+    } else {
+      totalExpense.value += element.amount;
+    }
+  });
+
+  totalBalance.value = totalIncome.value - totalExpense.value;
+
+  totalIncome.value = Number(totalIncome.value);
+  totalExpense.value = Number(totalExpense.value);
+  totalBalance.value = Number(totalBalance.value);
+  return { totalIncome, totalExpense, totalBalance };
+};
+
+//監聽dataObjArray
+watch(dataObjArray, () => {
+  console.log("dataObjArray被改變");
+
+  setTotalAmount();
+});
 </script>
 
 <template>
   <div class="body">
     <div class="leftBox">
-      <sidebar />
+      <sidebar :totalBalance="totalBalance" />
     </div>
 
     <div class="rightBox">
       <div class="rightTopBox">
-        <setAmountBox />
+        <setAmountBox :totalIncome="totalIncome" :totalExpense="totalExpense" />
         <addBtn :isDisplay="isAddPopDisplay" />
       </div>
       <div class="listArea">
         <list
-          v-for="(item, index) in dataObjArray"
+          v-for="item in dataObjArray"
           :text="item.text"
           :color="item.color"
           :amount="item.amount"
-          :btnNum="index"
           :isDisplay="isDeletePopDisplay"
           :listArray="dataObjArray"
         />
