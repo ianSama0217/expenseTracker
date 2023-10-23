@@ -17,12 +17,6 @@ const dataObjArray = reactive([]);
 //存放addpop emit資料的object
 let dataObj = reactive({ text: "", color: "", amount: 0 });
 
-//開啟/關閉DeletePopWindow
-const isDeletePopDisplay = () => {
-  isDisplayDelete.value = !isDisplayDelete.value;
-  console.log("關閉/顯示deletePopWindow");
-};
-
 //開啟/關閉AddPopWindow
 const isAddPopDisplay = () => {
   isDisplayAdd.value = !isDisplayAdd.value;
@@ -33,7 +27,7 @@ const isAddPopDisplay = () => {
 const addTranscation = () => {
   //array.push (object) --> []
   dataObjArray.push(dataObj);
-  console.log(dataObjArray);
+  console.log("資料新增成功" + JSON.stringify(dataObj));
 
   //push進陣列後clear dataObj
   dataObj = { text: "", color: "", amount: 0 };
@@ -42,9 +36,17 @@ const addTranscation = () => {
   isAddPopDisplay();
 };
 
+//開啟/關閉DeletePopWindow，指定Button的父組件
+const isDeletePopDisplay = () => {
+  isDisplayDelete.value = !isDisplayDelete.value;
+  console.log("關閉/顯示deletePopWindow");
+};
+
 //刪除list表單
-const deleteTranscation = () => {
-  //刪除指定list
+const deleteTranscation = (index) => {
+  //清除Array資料
+  dataObjArray.splice(index, 1);
+  console.log("資料刪除成功" + JSON.stringify(dataObj));
 
   //關閉彈跳視窗
   isDeletePopDisplay();
@@ -84,6 +86,7 @@ const setAmount = (data) => {
           :text="item.text"
           :color="item.color"
           :amount="item.amount"
+          :btnNum="index"
           :isDisplay="isDeletePopDisplay"
           :listArray="dataObjArray"
         />
@@ -104,7 +107,8 @@ const setAmount = (data) => {
   <deletePopWindow
     class="fixedground"
     v-show="isDisplayDelete"
-    :isDisplay="deleteTranscation"
+    :isDisplay="isDeletePopDisplay"
+    :deleteList="deleteTranscation"
   />
 </template>
 

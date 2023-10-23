@@ -1,6 +1,4 @@
 <script setup>
-import { watch } from "vue";
-
 const props = defineProps({
   text: {
     type: String,
@@ -14,6 +12,8 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  btnNum: Number,
+
   isDisplay: {
     type: Function,
     default: () => {},
@@ -30,7 +30,7 @@ const props = defineProps({
     <span>{{ text }}</span>
     <div class="flexbox">
       <p :class="color">$ {{ amount }}</p>
-      <button @click="isDisplay">Delete</button>
+      <button @click="isDisplay" id="targetList">Delete{{ btnNum }}</button>
     </div>
   </div>
 </template>

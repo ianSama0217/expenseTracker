@@ -4,6 +4,10 @@ const props = defineProps({
     type: Function,
     default: () => {},
   },
+  deleteList: {
+    type: Function,
+    default: () => {},
+  },
 });
 </script>
 
@@ -12,7 +16,7 @@ const props = defineProps({
     <div class="deletebox">
       <i class="fa-solid fa-x icon" @click="isDisplay"></i>
       <span for="">Sure to delete?</span>
-      <button type="button" @click="isDisplay">Delete</button>
+      <button type="button" @click="deleteList">Delete</button>
     </div>
   </div>
 </template>
