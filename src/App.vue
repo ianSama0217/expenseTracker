@@ -15,7 +15,7 @@ const isDisplayAdd = ref(false);
 const dataObjArray = reactive([]);
 
 //存放addpop emit資料的object
-let dataObj = reactive({ text: "", color: "", amount: "" });
+let dataObj = reactive({ text: "", color: "", amount: 0 });
 
 //開啟/關閉DeletePopWindow
 const isDeletePopDisplay = () => {
@@ -63,7 +63,7 @@ const setColor = (data) => {
 
 const setAmount = (data) => {
   // 將資料覆寫至dataObj修改原有資料
-  dataObj.amount = data;
+  dataObj.amount = Number(data);
 };
 </script>
 

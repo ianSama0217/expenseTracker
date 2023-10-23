@@ -11,8 +11,8 @@ const props = defineProps({
     default: "",
   },
   amount: {
-    type: String,
-    default: "",
+    type: Number,
+    default: 0,
   },
   isDisplay: {
     type: Function,
