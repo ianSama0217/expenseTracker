@@ -11,6 +11,12 @@ import deletePopWindow from "./components/deletePopWindow.vue";
 const isDisplayDelete = ref(false);
 const isDisplayAdd = ref(false);
 
+//list props需要的array
+const dataObjArray = reactive([]);
+
+//存放addpop emit資料的object
+let dataObj = reactive({ text: "", color: "", amount: "" });
+
 //開啟/關閉DeletePopWindow
 const isDeletePopDisplay = () => {
   isDisplayDelete.value = !isDisplayDelete.value;
@@ -21,6 +27,43 @@ const isDeletePopDisplay = () => {
 const isAddPopDisplay = () => {
   isDisplayAdd.value = !isDisplayAdd.value;
   console.log("關閉/顯示addPopWindow");
+};
+
+//新增list表單
+const addTranscation = () => {
+  //array.push (object) --> []
+  dataObjArray.push(dataObj);
+  console.log(dataObjArray);
+
+  //push進陣列後clear dataObj
+  dataObj = { text: "", color: "", amount: 0 };
+
+  //關閉addPopWIndow
+  isAddPopDisplay();
+};
+
+//刪除list表單
+const deleteTranscation = () => {
+  //刪除指定list
+
+  //關閉彈跳視窗
+  isDeletePopDisplay();
+};
+
+//取得addPop emit的資料
+const setText = (data) => {
+  // 將資料覆寫至dataObj修改原有資料
+  dataObj.text = data;
+};
+
+const setColor = (data) => {
+  // 將資料覆寫至dataObj修改原有資料
+  dataObj.color = data;
+};
+
+const setAmount = (data) => {
+  // 將資料覆寫至dataObj修改原有資料
+  dataObj.amount = data;
 };
 </script>
 
@@ -36,21 +79,32 @@ const isAddPopDisplay = () => {
         <addBtn :isDisplay="isAddPopDisplay" />
       </div>
       <div class="listArea">
-        <list :isDisplay="isDeletePopDisplay" />
+        <list
+          v-for="(item, index) in dataObjArray"
+          :text="item.text"
+          :color="item.color"
+          :amount="item.amount"
+          :isDisplay="isDeletePopDisplay"
+          :listArray="dataObjArray"
+        />
       </div>
     </div>
   </div>
 
   <addPopWindow
     class="fixedground"
-    v-show="isDisplayAdd"
+    v-if="isDisplayAdd"
     :isDisplay="isAddPopDisplay"
+    :addBtn="addTranscation"
+    @getText="setText"
+    @getColor="setColor"
+    @getAmount="setAmount"
   />
 
   <deletePopWindow
     class="fixedground"
     v-show="isDisplayDelete"
-    :isDisplay="isDeletePopDisplay"
+    :isDisplay="deleteTranscation"
   />
 </template>
 

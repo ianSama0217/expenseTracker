@@ -1,23 +1,48 @@
 <script setup>
+import { watch } from "vue";
+
 const props = defineProps({
+  text: {
+    type: String,
+    default: "",
+  },
+  color: {
+    type: String,
+    default: "",
+  },
+  amount: {
+    type: String,
+    default: "",
+  },
   isDisplay: {
     type: Function,
     default: () => {},
+  },
+  listArr: {
+    type: Array,
+    default: () => [],
   },
 });
 </script>
 
 <template>
   <div class="body">
-    <span>Text</span>
+    <span>{{ text }}</span>
     <div class="flexbox">
-      <p>$0</p>
+      <p :class="color">$ {{ amount }}</p>
       <button @click="isDisplay">Delete</button>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.red {
+  color: #a53c42;
+}
+
+.green {
+  color: #70a53c;
+}
 .body {
   width: 35vw;
   border: 1px solid #3c7fa5;
@@ -26,6 +51,7 @@ const props = defineProps({
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
+  margin-top: 1rem;
 
   span {
     font-size: 1.5rem;

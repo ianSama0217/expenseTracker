@@ -1,10 +1,18 @@
 <script setup>
+import { reactive } from "vue";
+
 const props = defineProps({
   isDisplay: {
     type: Function,
     default: () => {},
   },
+  addBtn: {
+    type: Function,
+    default: () => {},
+  },
 });
+
+const emits = defineEmits(["getText", "getColor", "getAmount"]);
 </script>
 
 <template>
@@ -12,16 +20,36 @@ const props = defineProps({
     <form action="">
       <i class="fa-solid fa-x icon" @click="isDisplay"></i>
       <label for="">Text</label>
-      <input type="text" placeholder="Empty" />
+      <input
+        type="text"
+        placeholder="Empty"
+        @change="$emit(`getText`, $event.target.value)"
+      />
+
       <div class="radioBox">
-        <input type="radio" name="chooseColor" />
+        <input
+          type="radio"
+          name="chooseColor"
+          value="green"
+          @input="$emit(`getColor`, $event.target.value)"
+        />
         <label for="">income</label>
-        <input type="radio" name="chooseColor" />
+        <input
+          type="radio"
+          name="chooseColor"
+          value="red"
+          @input="$emit(`getColor`, $event.target.value)"
+        />
         <label for="">expense</label>
       </div>
+
       <label for="">Amount</label>
-      <input type="number" placeholder="Empty" />
-      <button type="button" @click="isDisplay">add transaction</button>
+      <input
+        type="number"
+        placeholder="Empty"
+        @change="$emit(`getAmount`, $event.target.value)"
+      />
+      <button type="button" @click="addBtn">add transaction</button>
     </form>
   </div>
 </template>
