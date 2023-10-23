@@ -1,6 +1,4 @@
 <script setup>
-import { reactive } from "vue";
-
 const props = defineProps({
   isDisplay: {
     type: Function,
