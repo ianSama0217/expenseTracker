@@ -12,6 +12,7 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  BtnNum: Number,
   isDisplay: {
     type: Function,
     default: () => {},
